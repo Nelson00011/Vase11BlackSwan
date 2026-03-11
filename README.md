@@ -5,6 +5,7 @@
 ## Description:
 
 Here's your interactive research dossier — five tabbed sections built around your story's core themes:
+
      - The Theory breaks down Taleb's framework, including the Turkey Problem and Extremistan vs. Mediocristan — the conceptual engine your world runs on.
     - Empire Collapse gives you a five-stage timeline (with fiction callouts for each stage) plus a specific decode of your Ottoman reference.
     - Warning Signals is a table of historically verified pre-collapse indicators, each mapped to imagery from your premise — the seaweed, the ceremonies, the institutional blindness.
@@ -13,7 +14,7 @@ Here's your interactive research dossier — five tabbed sections built around y
     - The through-line across all of it: a Black Swan is unpredictable before it happens, carries massive impact, and gets explained as inevitable only after the fact Internet Archive — which is exactly the gap your story lives in, between what the institutions believe and what is actually coming for them.
 
 ## Technology Stack
-- **Frontend/Client:** React.js, HTML5, Claud.ai
+- **Frontend/Client:** HTML5, Claud.ai
 
 ## Screen Shots:
 <p align="center">Please reference the screenshot folder for more available images</p>
