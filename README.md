@@ -1,90 +1,25 @@
-<h1 align="center">projectsFULLSTACK</h1>
+<h1 align="center">Claude.AI Black Swan Novella</h1>
 
-`main image`
+<a align="center" href="https://claude.ai/?redirect=claude.com&via=cookie" ><img src="./screenShots/MainImageBS.jpg"></img></a>
 
 ## Description:
-Outline for general FULLSTACK DEVELOPMENT PROJECTs
+Here's your interactive research dossier — five tabbed sections built around your story's core themes:
+     - The Theory breaks down Taleb's framework, including the Turkey Problem and Extremistan vs. Mediocristan — the conceptual engine your world runs on.
+    - Empire Collapse gives you a five-stage timeline (with fiction callouts for each stage) plus a specific decode of your Ottoman reference.
+    - Warning Signals is a table of historically verified pre-collapse indicators, each mapped to imagery from your premise — the seaweed, the ceremonies, the institutional blindness.
+    - Fiction Craft covers technique: how to write structurally blind institutions, use sensory decay as prophecy, and comparable works (le Carré, Pynchon, Le Guin) that live in similar territory.
+    - Writer's Checklist is interactive — click each item as you develop your draft, with a progress bar tracking your worldbuilding.
+    - The through-line across all of it: a Black Swan is unpredictable before it happens, carries massive impact, and gets explained as inevitable only after the fact Internet Archive — which is exactly the gap your story lives in, between what the institutions believe and what is actually coming for them.
 
 ## Technology Stack
-- **Frontend/Client:** React.js, HTML5, CSS, framework, etc.
-- **API:** Api calls or external sources used
-- **Backend/Server:** node.js/express or python alternatives, include databases
-
-<h2 align="center">Video:</h2>
+- **Frontend/Client:** React.js, HTML5, Claud.ai
 
 ## Screen Shots:
 <p align="center">Please reference the screenshot folder for more available images</p>
 
-`selected image 1`
+<a align="center"><img src="./screenShots/WarningSignals.jpg"></img></a>
 
-`selected image 2`
-
-`selected image 3`
-
-## Run Code (Environment)
-
-### Front-End Instructions `<examples below>`
-- confirm that config is appropriate:
-```
-> node -v
-> npm -v
-> git --version
-```
-
-- Initial package.json & install dependenies(localhost:3000):
-    - Must be `cd`'d into frontend/client for install
-    - MUI, `react-router-dom`, redux, formik, etc... (see resources)
-```
-> npx create-react-app <project name>
-> cd <project name>
-> npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
-> npm install --save react-router-dom
-> npm install react-redux @reduxjs/toolkit
-> npm install formik yup dotenv react-responsive-carousel
-> npm install --save @stripe/react-stripe-js @stripe/stripe-js
-```
-- Test front-end once pages are generated (ctrl-c to exit):
-```
-> npm run start
-```
-
-### Back-End Helpful Instructions `<examples below>`
-- Initial package.json & install dependencies:
-    - Must be `cd`'d into backend/server for install
-```
-> npx create-strapi-app@latest <project name>
-> cd <project name>
-> npm install --save stripe
-```
-- Strapi Database generated (ctrl-c to exit):
-```
-> npm run develop
-```
-- **Avoid** *npm run start* and use the `npm run develop`. 
-- Allow server to restart with each edit (see resources): 
-    - **Content-Type Builder**: Item entry
-    - **Media Library**: upload photos
-    - **Permissions**: Settings > Roles > Public
-- When using .env variables remember to [install prior](https://www.npmjs.com/package/dotenv/v/14.0.0)
-```
-npm install dotenv --save
-```
--
-    - Create a .env file in the root directory of your project.
-    - Import and configure dotenv.
-    - Establish a .gitignore [here](https://git-scm.com/docs/gitignore)
-
-- In frontend fetch `item` from backend (*localhost:1337*):
-```
-const grouping = "items"
-const items = await fetch(
-`http://localhost:1337/api/${grouping}`
-)
-```
---------------------------
-### Deployment
-
-
+<a align="center"><img src="./screenShots/FictionCraft.jpg"></img></a>
 
 ## Contact:
 <!--- You can add in your linkedin, medium, stack overflow, dev.to account, etc. here --->
@@ -100,25 +35,19 @@ Connect with me on <a href="https://github.com/oakHalo">Oakhalo.dev</a>
 - `Tech used and links associated`
 
 `<examples below>`
-- **PostMan** for API Tests [here](https://www.postman.com/)
-    - jsonwebtoken / [jwt](https://jwt.io/) for Authentification & install [here](https://www.npmjs.com/package/jsonwebtoken)
-    - jwt Debugger [here](https://jwt.io/#debugger-io)
-- **React.New** allows for testing new React projects [here](react.new)
-- [bcrypt.js](https://www.npmjs.com/package/bcryptjs) part of password hasing for user Authentification. 
+- **Claude.AI** for API Tests [here](https://claude.ai/new)
+    - Claude is a series of large language models (LLMs) developed by Anthropic, an AI research company co-founded by former OpenAI executives. Named after Claude Shannon, the pioneer of information theory, the assistant is built using Constitutional AI, a training methodology designed to make it more helpful, honest, and harmless.
+    - Current Model Lineup (as of early 2026)
+- Anthropic typically releases its models in three distinct sizes to balance performance, speed, and cost: 
+    - Claude Opus (4.6): The most capable model, optimized for complex reasoning, coding, and professional enterprise agents.
+    - Claude Sonnet (4.6): The mid-tier model designed for high-scale performance in coding and enterprise workflows.
+    - Claude Haiku (4.5): The fastest and most cost-effective model, suitable for near-frontier intelligence at speed
 
-
-#### **style:** 
-- `frameworks and links associated`
-
-- Filler Text [typographic](https://generator.lorem-ipsum.info/)
-    - Lorem Ipsum 
-- Google Fonts [here](https://fonts.google.com/)
 
 #### **helpful hint:** 
 - `useful hints for future projects to go faster`
 - console log testing with `ctr-alt-l` 
 - Always Stay Positive & Triple Check Permissions :)
-
 
 
 
