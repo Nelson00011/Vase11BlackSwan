@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Black Swan — Research Dossier</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f2ede4;
+    --salt: #e8e0d2;
+    --seaweed: #2c4a3e;
+    --rust: #8b3a2a;
+    --frost: #c8d8e8;
+    --gold: #b8943a;
+    --dim: #6b6356;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  header {
+    padding: 60px 60px 40px;
+    border-bottom: 1px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::after {
+    content: '◆';
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 120px;
+    color: var(--gold);
+    opacity: 0.08;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .dossier-tag {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .dossier-tag::before {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 1px;
+    background: var(--rust);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--seaweed);
+  }
+
+  .subtitle {
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* TAB NAV */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    padding: 0 60px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    background: var(--salt);
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    padding: 16px 24px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    position: relative;
+    top: 1px;
+  }
+
+  .tab-btn:hover { color: var(--ink); }
+
+  .tab-btn.active {
+    color: var(--ink);
+    border-bottom-color: var(--rust);
+    font-weight: 500;
+  }
+
+  /* CONTENT */
+  .tab-content { display: none; padding: 50px 60px; }
+  .tab-content.active { display: block; animation: fadeUp 0.3s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION HEADER */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 28px;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+  }
+
+  .card-accent {
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+  }
+
+  .accent-rust  { background: var(--rust); }
+  .accent-sea   { background: var(--seaweed); }
+  .accent-frost { background: var(--frost); border: 1px solid #aab8c8; }
+  .accent-gold  { background: var(--gold); }
+
+  .card-num {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    margin-bottom: 10px;
+  }
+
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .card p {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  .card-tag {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid currentColor;
+  }
+
+  .tag-theory  { color: var(--rust); }
+  .tag-empire  { color: var(--seaweed); }
+  .tag-world   { color: #555; }
+  .tag-writing { color: var(--gold); }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 32px; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--rust), var(--seaweed), var(--frost));
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 32px;
+    padding-left: 20px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -26px; top: 7px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--rust);
+  }
+
+  .tl-stage {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 4px;
+  }
+
+  .tl-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .tl-body {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  .tl-fiction {
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: var(--salt);
+    border-left: 2px solid var(--gold);
+    font-size: 11px;
+    font-style: italic;
+    color: var(--dim);
+  }
+
+  /* PULLQUOTE */
+  .pullquote {
+    margin: 32px 0;
+    padding: 28px 36px;
+    border-left: 4px solid var(--seaweed);
+    background: rgba(44,74,62,0.05);
+  }
+
+  .pullquote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--seaweed);
+  }
+
+  .pullquote cite {
+    display: block;
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    font-style: normal;
+  }
+
+  /* SIGNAL TABLE */
+  .signal-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+
+  .signal-table th {
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    padding: 10px 16px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .signal-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--salt);
+    font-size: 12px;
+    vertical-align: top;
+  }
+
+  .signal-table tr:last-child td { border-bottom: none; }
+
+  .signal-table tr:hover td { background: rgba(0,0,0,0.02); }
+
+  .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .dot-high   { background: var(--rust); }
+  .dot-med    { background: var(--gold); }
+  .dot-low    { background: var(--seaweed); }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--salt);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 12px;
+    color: #333;
+  }
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-box {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--dim);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .check-box:hover { border-color: var(--rust); }
+  .check-box.checked {
+    background: var(--seaweed);
+    border-color: var(--seaweed);
+    color: white;
+    font-size: 11px;
+  }
+
+  .check-text { line-height: 1.6; }
+  .check-text strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    margin: 40px 0;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+  }
+
+  /* TWO COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  @media (max-width: 700px) {
+    header, .tab-nav, .tab-content { padding-left: 24px; padding-right: 24px; }
+    .two-col { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 30px 60px;
+    border-top: 1px solid var(--salt);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="dossier-tag">Research Dossier · Speculative Fiction</div>
+  <h1>Black Swan<br><em>& the Fall of Empires</em></h1>
+  <div class="subtitle">A research deep-dive for sci-fi / spy fiction · Compiled March 2026</div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('theory')">The Theory</button>
+  <button class="tab-btn" onclick="showTab('collapse')">Empire Collapse</button>
+  <button class="tab-btn" onclick="showTab('signals')">Warning Signals</button>
+  <button class="tab-btn" onclick="showTab('craft')">Fiction Craft</button>
+  <button class="tab-btn" onclick="showTab('checklist')">Writer's Checklist</button>
+</nav>
+
+<!-- TAB 1: THE THEORY -->
+<section class="tab-content active" id="tab-theory">
+  <div class="section-label">Foundation</div>
+  <div class="section-title">Black Swan Theory — What You Need to Know</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-accent accent-rust"></div>
+      <div class="card-num">01</div>
+      <h3>The Three Defining Traits</h3>
+      <p>A Black Swan event is: <strong>unpredictable</strong> before it happens, carries <strong>massive, outsized impact</strong>, and is made to seem <strong>inevitable in hindsight</strong> — as if everyone should have seen it coming.</p>
+      <span class="card-tag tag-theory">Core Theory</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-rust"></div>
+      <div class="card-num">02</div>
+      <h3>Extremistan vs. Mediocristan</h3>
+      <p>Taleb's two worlds: <em>Mediocristan</em> is the predictable world of averages — height, weight, daily routine. <em>Extremistan</em> is ruled by outliers — markets, epidemics, revolutions, empires. Your story lives in Extremistan.</p>
+      <span class="card-tag tag-theory">World Logic</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-sea"></div>
+      <div class="card-num">03</div>
+      <h3>The Turkey Problem</h3>
+      <p>A turkey is fed every day for 1,000 days, growing more confident in its safety. On day 1,001 — Thanksgiving — it is slaughtered. The more stable things seem, the more catastrophic the eventual rupture. Perfect metaphor for your institutions.</p>
+      <span class="card-tag tag-theory">Metaphor</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-sea"></div>
+      <div class="card-num">04</div>
+      <h3>Negative vs. Positive Swans</h3>
+      <p>Negative Black Swans happen fast — a collapse, an assassination, a revelation. Positive ones take time to emerge — a technology, a movement, a new order rising from ruins. Your story can use both in counterpoint.</p>
+      <span class="card-tag tag-theory">Story Structure</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-gold"></div>
+      <div class="card-num">05</div>
+      <h3>The Narrative Fallacy</h3>
+      <p>After a Black Swan hits, humans rush to explain it — to give it cause, meaning, inevitability. The story we tell <em>after</em> becomes "official history." Your spy world is one where the narrators are all unreliable.</p>
+      <span class="card-tag tag-theory">Epistemology</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-gold"></div>
+      <div class="card-num">06</div>
+      <h3>The Opacity of History</h3>
+      <p>Taleb describes history as a black box — events go in, events come out, but no one can truly trace cause and effect. Police, governments, even the smartest operatives are prisoners of this opacity. Institutions appear rational; they are not.</p>
+      <span class="card-tag tag-theory">Institutional Blindness</span>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>"Positive Black Swans take time to show their effect while negative ones happen very quickly — it is much easier and much faster to destroy than to build."</p>
+    <cite>— Nassim Nicholas Taleb, The Black Swan</cite>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-label">For Your Story</div>
+      <div class="section-title" style="font-size:20px;">Applying the Theory</div>
+      <p style="font-size:12px; line-height:1.9; color:#444;">The most chilling thing about Black Swans in fiction is not the event itself — it's the institutional blindness that preceded it. Your police are "DUM" not because they're stupid, but because they live in Mediocristan while the world has quietly slipped into Extremistan. They are still using the maps of a country that no longer exists.</p>
+      <br>
+      <p style="font-size:12px; line-height:1.9; color:#444;">The seasonal metaphor you've built — frost, winter, fall, spring — maps beautifully onto Taleb's Turkey Problem. Spring <em>cannot</em> hide what happened in Fall, because the rot was baked in long before the event occurred.</p>
+    </div>
+    <div>
+      <div class="section-label">Key Reading</div>
+      <div class="section-title" style="font-size:20px;">Source Material</div>
+      <ul style="list-style:none; font-size:12px; line-height:2; color:#444;">
+        <li>◆ Taleb, N.N. — <em>The Black Swan</em> (2007)</li>
+        <li>◆ Taleb, N.N. — <em>Antifragile</em> (2012) — how systems either break or strengthen under stress</li>
+        <li>◆ Taleb, N.N. — <em>Fooled by Randomness</em> (2001) — institutional overconfidence</li>
+        <li>◆ Kahneman, D. — <em>Thinking, Fast and Slow</em> — cognitive biases that blind institutions</li>
+        <li>◆ Denton, C. — <em>Fall of Empires</em> — 17 historical collapses from Athens to the Soviets</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 2: EMPIRE COLLAPSE -->
+<section class="tab-content" id="tab-collapse">
+  <div class="section-label">Historical Pattern</div>
+  <div class="section-title">How Empires Actually Die</div>
+
+  <p style="font-size:12px; color:#555; margin-bottom:36px; max-width:680px;">Empires don't collapse overnight. They decay through compounding failures — financial, social, military — until a final Black Swan event (a battle, an assassination, a plague) tips the already-rotting structure. The "fall" is the last scene of a play that ran for generations.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-stage">Stage 1 · The Apogee</div>
+      <div class="tl-title">Peak Power — Invisible Fragility</div>
+      <div class="tl-body">The empire reaches its maximum territorial, economic, and cultural height. Everything appears stable. Internal rot begins: elites prioritize personal wealth over collective duty; cohesion quietly erodes. The Turkey is being fed.</div>
+      <div class="tl-fiction">Fiction use: Your world should open here — gleaming surfaces, lavish ceremonies, suits that fit perfectly. The reader suspects what the characters cannot.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-stage">Stage 2 · The Overstretch</div>
+      <div class="tl-title">Ambition Outpaces Capacity</div>
+      <div class="tl-body">Military campaigns drain the treasury. Trade networks fray. The center demands more from peripheries already at breaking point. Rome, the Ottomans, the British — all stretched until the structure could no longer hold its own weight.</div>
+      <div class="tl-fiction">Fiction use: The "black suit events" — formal, official, soaking and seaweed-rancid underneath. Every ceremony is a lie.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-stage">Stage 3 · The Age of Decadence</div>
+      <div class="tl-title">Frivolity, Materialism, Defensiveness</div>
+      <div class="tl-body">According to historian Sir John Glubb's study of 11 empires, the penultimate stage is marked by defensiveness, materialism, and a loss of civic duty. Bow ties are worn; nobody is steering the ship.</div>
+      <div class="tl-fiction">Fiction use: Your "bow ties are eaten" image — the ritual garments of power become absurd, even edible, meaningless.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-stage">Stage 4 · The Straw</div>
+      <div class="tl-title">The Black Swan Arrives</div>
+      <div class="tl-body">A single event — a fly landing on a house of cards. The event itself is minor; its power is in what it reveals. The Ottomans, Rome, the Soviets — each had a "final straw" that historians later over-explain as the cause, obscuring centuries of structural failure.</div>
+      <div class="tl-fiction">Fiction use: Your spy plot's inciting incident. It seems like a local, solvable problem. The police treat it as routine. It is not.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-stage">Stage 5 · The Aftermath</div>
+      <div class="tl-title">Rewriting, Forgetting, Repeating</div>
+      <div class="tl-body">The average citizen barely noticed the collapse — archaeologist Guy Middleton notes the empire "died" but life continued in farms and villages. What changes is the narrative. Power rushes to fill the vacuum; new empires are already forming.</div>
+      <div class="tl-fiction">Fiction use: Spring cannot hide the failures that occurred during the Fall. A new order emerges wearing the old's formal wear.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">The Ottoman Case</div>
+  <div class="section-title" style="font-size:22px;">Your Specific Reference — Decoded</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-accent accent-sea"></div>
+      <h3>The Ottoman Decline</h3>
+      <p>Once the longest-lived empire in history (~600 years), the Ottoman Empire's final collapse was marked by military hubris, treasury drain from constant wars, ethnic nationalism it could not contain, and foreign debt traps. It "sank into oblivion" not with a bang but a slow, graceful bureaucratic dissolution.</p>
+      <span class="card-tag tag-empire">Historical Model</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-sea"></div>
+      <h3>Why "More Graceful"?</h3>
+      <p>Your line is cutting: even the Ottoman collapse was more graceful than whatever your fictional empire is doing. This suggests a future-state empire that has lost even the dignity of a slow decline — it fails messily, chaotically, and without any of the ceremony of history's great collapses.</p>
+      <span class="card-tag tag-empire">Narrative Irony</span>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 3: WARNING SIGNALS -->
+<section class="tab-content" id="tab-signals">
+  <div class="section-label">Forensics</div>
+  <div class="section-title">Warning Signals — Before the Swan Lands</div>
+
+  <p style="font-size:12px; color:#555; margin-bottom:30px; max-width:680px;">These are the historically verified signs that a civilization or institution is failing — even while it appears stable. For your fiction, these are the details your characters ignore and your readers should notice.</p>
+
+  <table class="signal-table">
+    <thead>
+      <tr>
+        <th>Signal</th>
+        <th>Historical Example</th>
+        <th>Fiction Application</th>
+        <th>Danger</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot dot-high"></span><strong>Elite fracture</strong> — the powerful prioritize personal wealth over collective survival</td>
+        <td>Rome's senatorial class; Byzantine nepotism</td>
+        <td>Your spies serve masters who are hoarding, not governing</td>
+        <td>High</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot-high"></span><strong>Narrative control breaks down</strong> — official explanations no longer match observable reality</td>
+        <td>Soviet media vs. Chernobyl reality</td>
+        <td>Police reports that don't match the scene; redacted files that smell of seaweed</td>
+        <td>High</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot-med"></span><strong>Currency debasement</strong> — the medium of exchange loses meaning</td>
+        <td>Roman silver dilution; Ottoman treasury drain</td>
+        <td>Information itself becomes the debased currency in a surveillance state</td>
+        <td>Medium</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot-high"></span><strong>Institutional overconfidence</strong> — experts become less accurate the more certain they are</td>
+        <td>Pre-WWI generals; pre-2008 economists</td>
+        <td>Your police. Your intelligence agencies. Absolutely certain. Completely wrong.</td>
+        <td>High</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot-med"></span><strong>Ecological/resource exhaustion</strong> — the physical foundation crumbles</td>
+        <td>Mayan deforestation; Khmer drought</td>
+        <td>The ocean in your imagery — seaweed, salt, soaking — suggests rising waters, literal or metaphorical</td>
+        <td>Medium</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot-low"></span><strong>Civic disengagement</strong> — citizens stop participating, accountability collapses</td>
+        <td>Late Roman Republic; modern democracies</td>
+        <td>A world where everyone knows the bow ties are meaningless but keeps wearing them</td>
+        <td>Slow burn</td>
+      </tr>
+      <tr>
+        <td><span class="dot dot-high"></span><strong>Communication breakdown</strong> — the center cannot relay truth to periphery (or won't)</td>
+        <td>Carolingian fragmentation; Ottoman provincial drift</td>
+        <td>Intelligence that never reaches the right hands; orders that arrive too late or wrong</td>
+        <td>High</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- TAB 4: FICTION CRAFT -->
+<section class="tab-content" id="tab-craft">
+  <div class="section-label">Writing Technique</div>
+  <div class="section-title">Crafting the Black Swan Novel</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-accent accent-rust"></div>
+      <h3>The Unreliable Institution</h3>
+      <p>Your police aren't dumb — they're structurally blind. Taleb calls this "epistemic arrogance": believing your models of the world are complete. Give your institutions excellent procedures and deeply wrong assumptions. The horror is in the gap.</p>
+      <span class="card-tag tag-writing">Technique</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-rust"></div>
+      <h3>Sensory Decay as Prophecy</h3>
+      <p>Your instinct for salt, seaweed, and cold is exactly right. The sensory world always knows before the cognitive world does. Let your settings decay in ways characters rationalize — the smell they call "sea air," the damp they call "winter."</p>
+      <span class="card-tag tag-writing">Atmosphere</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-sea"></div>
+      <h3>Seasonal Structure</h3>
+      <p>Your Fall/Winter/Spring arc maps onto classical tragedy. Consider: chapters in apparent Spring that are actually Winter in disguise. A character who believes they're rebuilding while actually completing the collapse that began seasons ago.</p>
+      <span class="card-tag tag-writing">Structure</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-sea"></div>
+      <h3>The Spy as Epistemologist</h3>
+      <p>The best spy fiction isn't about action — it's about knowledge and its limits. Le Carré's Smiley, Greene's Wormold. Your spy lives in Taleb's black box, gathering information that can never be complete, making decisions in permanent fog.</p>
+      <span class="card-tag tag-writing">Character</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-gold"></div>
+      <h3>The Christmas Failure</h3>
+      <p>Your "failures astound at Christmas" image is rich: Christmas as the moment of maximum false comfort, maximum institutional blindness. The feast before the slaughter. Use holidays, ceremonies, and formal occasions as the moments when the real world intrudes most violently.</p>
+      <span class="card-tag tag-writing">Symbolism</span>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-gold"></div>
+      <h3>Topsy-Turvy Logic</h3>
+      <p>In a world past its Black Swan event, normal logic inverts. The decorated are the guilty. The absurd is official policy. Bow ties are eaten because the social contract that gave them meaning no longer holds. Lean into this inversion — it should feel feverish, not satirical.</p>
+      <span class="card-tag tag-writing">Tone</span>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>"History is opaque. You see what comes out, not the script that produces events... The mind is a wonderful instrument for self-delusion."</p>
+    <cite>— Nassim Nicholas Taleb</cite>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Comparable Works</div>
+  <div class="section-title" style="font-size:22px;">Fiction That Lives in This Space</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-accent accent-frost"></div>
+      <h3>John le Carré — <em>Tinker Tailor Soldier Spy</em></h3>
+      <p>The slow revelation that an institution's rot runs deeper than anyone suspected. Intelligence agencies that survive by lying to themselves. The Cold War as a permanent state of post-Black Swan ambiguity.</p>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-frost"></div>
+      <h3>Thomas Pynchon — <em>Gravity's Rainbow</em></h3>
+      <p>Empire collapse as sensory overwhelm. WWII's end as a Black Swan that nobody has processed. Systems too complex to understand, operating beyond any individual's comprehension.</p>
+    </div>
+    <div class="card">
+      <div class="card-accent accent-frost"></div>
+      <h3>Ursula K. Le Guin — <em>The Left Hand of Darkness</em></h3>
+      <p>An observer trying to understand a civilization on the verge — the failure of the envoy's models, the gap between what institutions say and what the world is doing. Speculative fiction as epistemological thriller.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 5: CHECKLIST -->
+<section class="tab-content" id="tab-checklist">
+  <div class="section-label">Writer's Tool</div>
+  <div class="section-title">Story Development Checklist</div>
+  <p style="font-size:12px; color:#555; margin-bottom:28px;">Click each item as you work through it. Use this to track the elements that will make your Black Swan story feel inevitable — and inevitable <em>only</em> in hindsight.</p>
+
+  <ul class="checklist" id="checklist">
+    <li>
+      <div class="check-box" onclick="toggle(this)"></div>
+      <div class="check-text">
+        <strong>Define your Black Swan event</strong>
+        What is the singular event at the story's center? It must be unpredictable before it happens and obvious in retrospect.
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggle(this)"></div>
+      <div class="check-text">
+        <strong>Establish the Turkey phase</strong>
+        Show your empire/institution at its most confident. Plant the seeds of rot invisibly. The reader should sense it; the characters must not.
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggle(this)"></div>
+      <div class="check-text">
+        <strong>Make your institutions structurally blind</strong>
+        The police, the agencies, the state — give them excellent processes built for the wrong world (Mediocristan tools in Extremistan conditions).
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggle(this)"></div>
+      <div class="check-text">
+        <strong>Layer your sensory decay</strong>
+        Salt, seaweed, frost, cold — the physical world should register the collapse before any character consciously perceives it.
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggle(this)"></div>
+      <div class="check-text">
+        <strong>Build your seasonal arc</strong>
+        Map Fall (the hidden failures), Winter (the collapse), and the false Spring (the new order wearing the old's formal dress).
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggle(this)"></div>
+      <div class="check-text">
+        <strong>Choose your Ottoman parallel</strong>
+        Which real imperial collapse most closely mirrors your fictional one? Identify 3–5 specific echoes to weave in (the treasury drain, the overstretch, the final straw).
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggle(this)"></div>
+      <div class="check-text">
+        <strong>Design the post-event narrative fallacy</strong>
+        After your Black Swan hits, who rewrites the story? How do they make it seem inevitable? This is your "official history" — and your readers will know it's a lie.
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggle(this)"></div>
+      <div class="check-text">
+        <strong>Build your Topsy-Turvy inversions</strong>
+        List 5 things that should mean one thing but now mean another. Bow ties, black suits, Christmas, ceremonies — the old symbols in the new, broken world.
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggle(this)"></div>
+      <div class="check-text">
+        <strong>Identify who benefits from the collapse</strong>
+        Black Swan events are catastrophic for most and quietly lucrative for a few. Find those characters. They are probably in formal dress.
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggle(this)"></div>
+      <div class="check-text">
+        <strong>Test your spy protagonist's epistemology</strong>
+        What does your protagonist <em>think</em> they know? What are they structurally prevented from knowing? Their blindspot is the story.
+      </div>
+    </li>
+  </ul>
+
+  <div id="progress-bar-wrap" style="margin-top:32px; padding:20px; background:var(--salt);">
+    <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--dim); margin-bottom:10px;">Research Progress</div>
+    <div style="height:4px; background:rgba(0,0,0,0.1); width:100%;">
+      <div id="progress-bar" style="height:4px; background:var(--seaweed); width:0%; transition:width 0.4s ease;"></div>
+    </div>
+    <div id="progress-label" style="margin-top:8px; font-size:11px; color:var(--dim);">0 of 10 complete</div>
+  </div>
+</section>
+
+<footer>
+  <span>Black Swan Research Dossier</span>
+  <span>Speculative / Spy Fiction · 2026</span>
+</footer>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function toggle(el) {
+    el.classList.toggle('checked');
+    el.textContent = el.classList.contains('checked') ? '✓' : '';
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const total = document.querySelectorAll('.check-box').length;
+    const done = document.querySelectorAll('.check-box.checked').length;
+    const pct = Math.round((done / total) * 100);
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-label').textContent = done + ' of ' + total + ' complete';
+  }
+</script>
+</body>
+</html>
