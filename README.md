@@ -3,6 +3,7 @@
 <a align="center" href="https://claude.ai/?redirect=claude.com&via=cookie" ><img src="./screenShots/MainImageBS.jpg"></img></a>
 
 ## Description:
+
 Here's your interactive research dossier — five tabbed sections built around your story's core themes:
      - The Theory breaks down Taleb's framework, including the Turkey Problem and Extremistan vs. Mediocristan — the conceptual engine your world runs on.
     - Empire Collapse gives you a five-stage timeline (with fiction callouts for each stage) plus a specific decode of your Ottoman reference.
@@ -31,14 +32,10 @@ Connect with me on <a href="https://github.com/oakHalo">Oakhalo.dev</a>
 
 ## Resources:
 
-- `Tech used and links associated`
-- `Tech used and links associated`
-
-`<examples below>`
 - **Claude.AI** for API Tests [here](https://claude.ai/new)
     - Claude is a series of large language models (LLMs) developed by Anthropic, an AI research company co-founded by former OpenAI executives. Named after Claude Shannon, the pioneer of information theory, the assistant is built using Constitutional AI, a training methodology designed to make it more helpful, honest, and harmless.
     - Current Model Lineup (as of early 2026)
-- Anthropic typically releases its models in three distinct sizes to balance performance, speed, and cost: 
+- **[Anthropic](https://www.anthropic.com/)** typically releases its models in three distinct sizes to balance performance, speed, and cost: 
     - Claude Opus (4.6): The most capable model, optimized for complex reasoning, coding, and professional enterprise agents.
     - Claude Sonnet (4.6): The mid-tier model designed for high-scale performance in coding and enterprise workflows.
     - Claude Haiku (4.5): The fastest and most cost-effective model, suitable for near-frontier intelligence at speed
