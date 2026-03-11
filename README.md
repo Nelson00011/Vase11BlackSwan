@@ -14,7 +14,7 @@ Here's your interactive research dossier — five tabbed sections built around y
     - The through-line across all of it: a Black Swan is unpredictable before it happens, carries massive impact, and gets explained as inevitable only after the fact Internet Archive — which is exactly the gap your story lives in, between what the institutions believe and what is actually coming for them.
 
 ## Technology Stack
-- **Frontend/Client:** HTML5, Claud.ai
+- **Frontend/Client:** HTML5, Claude.AI
 
 ## Screen Shots:
 <p align="center">Please reference the screenshot folder for more available images</p>
