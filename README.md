@@ -6,7 +6,7 @@
 
 Here's your interactive research dossier — five tabbed sections built around your story's core themes:
 
-     - The Theory breaks down Taleb's framework, including the Turkey Problem and Extremistan vs. Mediocristan — the conceptual engine your world runs on.
+    - The Theory breaks down Taleb's framework, including the Turkey Problem and Extremistan vs. Mediocristan — the conceptual engine your world runs on.
     - Empire Collapse gives you a five-stage timeline (with fiction callouts for each stage) plus a specific decode of your Ottoman reference.
     - Warning Signals is a table of historically verified pre-collapse indicators, each mapped to imagery from your premise — the seaweed, the ceremonies, the institutional blindness.
     - Fiction Craft covers technique: how to write structurally blind institutions, use sensory decay as prophecy, and comparable works (le Carré, Pynchon, Le Guin) that live in similar territory.
